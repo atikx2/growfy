@@ -35,6 +35,23 @@ Full admin panel, order management, contact inbox, newsletter — সবকি�
 
 ---
 
+## 🔗 GitHub থেকে cPanel-এ Auto Deploy (Git Version Control)
+
+cPanel → **Git™ Version Control** ফিচার থাকলে (hosting company enable করে দিতে পারে):
+
+1. cPanel → **Git Version Control** → **Create**
+2. **Clone URL:** `https://github.com/atikx2/growfy.git` দিন
+   **Branch:** `arena/11e027a1-growfy`
+   **Path:** `public_html` (খালি থাকতে হবে) অথবা উপ-ফোল্ডার
+3. **Create** চাপুন — repo clone হয়ে যাবে
+4. পরের বার update আনতে: **Pull or Deploy** → **Update from Remote** (GitHub-এ push করেই আপডেট)
+
+> ⚠️ **সত্যি কথা:** এতে Vercel-এর মতো আলাদা automatic "preview link" পাবেন না — clone/deploy হওয়া ফোল্ডার যে domain/subdomain-এ point করা সেখানেই site দেখা যাবে। আলাদা preview/staging link চাইলে cPanel → **Subdomains** থেকে `preview.yourdomain.com` বানিয়ে ওই ফোল্ডারে repo clone করুন — সেটাই আপনার preview URL!
+
+> 🔐 **গুরুত্বপূর্ণ:** Git pull করলে repo-র ফাইলগুলো তাজা হয় — কিন্তু আপনার DB password যাতে নষ্ট না হয়, credentials রাখুন **`config.local.php`**-তে (`config.local.php.sample` ফাইল copy করুন)। এটা git-এ থাকে না, pull করলেও অটো survive করে।
+
+---
+
 ## 🚀 cPanel-এ ডিপ্লয় (ধাপে ধাপে)
 
 ### ধাপ ১ — ফাইল আপলোড
@@ -50,17 +67,18 @@ Full admin panel, order management, contact inbox, newsletter — সবকি�
 2. নতুন database বানান (যেমন: `growfy_db`)
 3. নতুন user বানান + strong password দিন
 4. User-টাকে database-এ **Add** করুন (All Privileges দিন)
-5. `config.php` ফাইল এডিট করে credentials বসান:
+5. **`config.local.php.sample`** ফাইলটা copy করে নাম দিন **`config.local.php`**, তারপর এতে credentials বসান:
 
 ```php
-define('DB_HOST', 'localhost');
 define('DB_NAME', 'youruser_growfy_db');   // ← আপনার database নাম
 define('DB_USER', 'youruser_growfy');       // ← আপনার user
 define('DB_PASS', 'আপনার-password');        // ← password
 ```
 
+> `config.local.php` git-এ track হয় না — GitHub deploy/pull করলেও নিরাপদ থাকে।
+
 **অপশন B — কিছুই করবেন না (SQLite)**
-- `config.php` এ কিছু না বসালে সাইট নিজে নিজে `data/growfy.db` ফাইলে চলবে
+- কোনো DB config না দিলে সাইট নিজে নিজে `data/growfy.db` ফাইলে চলবে
 - ছোট/মিডিয়াম ট্রাফিকের জন্য একদম ঠিক আছে
 
 ### ধাপ ৩ — সাইট খুলুন

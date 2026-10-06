@@ -3,29 +3,37 @@
  * =====================================================================
  *  Growfy Agency — Main Configuration
  * =====================================================================
- *  cPanel-এ MySQL ব্যবহার করতে নিচের ৪টি মান বদলান (DB_NAME, DB_USER,
- *  DB_PASS, DB_HOST)। কিছু না দিলে স্বয়ংক্রিয়ভাবে SQLite (data/ ফোল্ডারে
- *  ফাইল-ভিত্তিক ডাটাবেস) ব্যবহার হবে — কোনো সেটআপ ছাড়াই চলবে।
  *
- *  For cPanel MySQL: create a database + user in cPanel > MySQL Databases,
- *  put the credentials below. Tables are created automatically on first run.
+ *  ⚡ cPanel-এ DB credentials সেট করার সঠিক উপায়:
+ *  এই ফাইলটা না বদলে একই ফোল্ডারে `config.local.php` নামে ফাইল বানান
+ *  (config.local.php.sample ফাইলটা দেখুন)। ওই ফাইলে credentials রাখলে
+ *  GitHub থেকে pull করলেও সেটা কখনো overwrite হবে না।
+ *
+ *  কিছুই না করলে স্বয়ংক্রিয়ভাবে SQLite (data/ ফোল্ডারে) ব্যবহার হবে —
+ *  কোনো সেটআপ ছাড়াই সাইট চলবে।
  */
 
-/* ----------------------------- DATABASE ----------------------------- */
-define('DB_DRIVER', 'auto');        // 'auto' | 'mysql' | 'sqlite'
-define('DB_HOST',   'localhost');   // MySQL host (cPanel এ সাধারণত localhost)
-define('DB_NAME',   '');            // যেমন: username_growfy
-define('DB_USER',   '');            // যেমন: username_growfy
-define('DB_PASS',   '');            // MySQL password
-define('DB_PREFIX', 'gf_');         // টেবিল প্রিফিক্স (ইচ্ছা করলে বদলান)
+/* ------ server-specific overrides (NOT tracked by git) ------ */
+$__local_config = __DIR__ . '/config.local.php';
+if (file_exists($__local_config)) {
+    require $__local_config;
+}
+unset($__local_config);
 
-/* ------------------------------ GENERAL ----------------------------- */
-define('GROWFY_ENV', 'production'); // 'production' | 'development'
-define('APP_TZ', 'Asia/Dhaka');     // timezone
-define('UPLOAD_MAX_MB', 3);         // admin image upload limit (MB)
+/* -------------------------- DEFAULTS -------------------------- */
+if (!defined('DB_DRIVER'))   define('DB_DRIVER', 'auto');        // 'auto' | 'mysql' | 'sqlite'
+if (!defined('DB_HOST'))     define('DB_HOST',   'localhost');
+if (!defined('DB_NAME'))     define('DB_NAME',   '');            // যেমন: username_growfy
+if (!defined('DB_USER'))     define('DB_USER',   '');
+if (!defined('DB_PASS'))     define('DB_PASS',   '');
+if (!defined('DB_PREFIX'))   define('DB_PREFIX', 'gf_');
+
+if (!defined('GROWFY_ENV'))  define('GROWFY_ENV', 'production'); // 'production' | 'development'
+if (!defined('APP_TZ'))      define('APP_TZ', 'Asia/Dhaka');
+if (!defined('UPLOAD_MAX_MB')) define('UPLOAD_MAX_MB', 3);
 
 /* =====================================================================
- *  আর কিছু বদলাতে হবে না — নিচের অংশ সিস্টেমের।
+ *  SYSTEM — আর কিছু বদলাতে হবে না
  *  ===================================================================== */
 date_default_timezone_set(APP_TZ);
 if (GROWFY_ENV === 'development') {

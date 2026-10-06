@@ -1,8 +1,14 @@
 node_modules/
 preview/node_modules/
 preview/package-lock.json
+preview/shots/
+preview/shot2.mjs
+preview/shot-site.mjs
+preview/shot-mobile.mjs
+preview/screenshot.mjs
 data/*.db
 data/*.db-*
 data/error.log
 uploads/img_*
+config.local.php
 .DS_Store

@@ -1,0 +1,18 @@
+<?php
+/**
+ * =====================================================================
+ *  Server-specific config — এই ফাইলটা copy করে নাম দিন: config.local.php
+ *  এখানে রাখা credentials GitHub-এ যায় না (.gitignore-এ আছে) এবং
+ *  git pull করলেও overwrite হয় না — cPanel-এ নিরাপদ।
+ * =====================================================================
+ */
+
+define('DB_DRIVER', 'mysql');
+define('DB_HOST',   'localhost');
+define('DB_NAME',   'cpaneluser_growfy');      // ← আপনার MySQL database নাম
+define('DB_USER',   'cpaneluser_growfy');       // ← MySQL user
+define('DB_PASS',   'your-strong-password');    // ← MySQL password
+
+/* চাইলে timezone বা environment-ও override করতে পারেন: */
+// define('APP_TZ', 'Asia/Dhaka');
+// define('GROWFY_ENV', 'development');
