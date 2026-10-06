@@ -10,6 +10,7 @@ Full admin panel, order management, contact inbox, newsletter — সবকি�
 ## ✨ ফিচারসমূহ
 
 **ওয়েবসাইট (Frontend)**
+- 🌗 **Dark/Light mode toggle** (navbar-এ) — visitor-এর পছন্দ মনে রাখে + system theme respect করে
 - Premium dark UI — glassmorphism navbar, gradient hero, floating stat cards
 - Animated counters, testimonial slider (drag/swipe), FAQ accordion, platform marquee
 - **Order Now modal** — ভিজিটর সরাসরি service order/inquiry করতে পারবে

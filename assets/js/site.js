@@ -5,6 +5,21 @@
   const $  = (s, c) => (c || document).querySelector(s);
   const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
 
+  /* ---------------------- dark / light theme ---------------------- */
+  const themeToggle = $('#themeToggle');
+  const applyTheme = (t) => {
+    document.documentElement.setAttribute('data-theme', t);
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+  };
+  applyTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+  themeToggle && themeToggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('growfy-theme', next); } catch (e) { /* private mode */ }
+    applyTheme(next);
+  });
+
   /* ------------------------- navbar ------------------------- */
   const navbar = $('#navbar');
   const navToggle = $('#navToggle');

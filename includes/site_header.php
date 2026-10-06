@@ -8,14 +8,22 @@ $ver      = fn(string $f) => file_exists(GROWFY_ROOT . '/' . $f) ? filemtime(GRO
 $navItems = ['#home' => 'Home', '#services' => 'Services', '#about' => 'About', '#process' => 'Process', '#why' => 'Why Us', '#reviews' => 'Reviews', '#faq' => 'FAQ'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= h(c('seo_title')) ?></title>
 <meta name="description" content="<?= h(c('seo_description')) ?>">
 <meta name="keywords" content="<?= h(c('seo_keywords')) ?>">
-<meta name="theme-color" content="#070b12">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070b12">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f6fa">
+<script>
+/* Theme init — runs before first paint to avoid flash. Saved choice first,
+   then system preference, default dark. */
+!function(){var t;try{t=localStorage.getItem('growfy-theme')}catch(e){}
+if(!t){t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'}
+document.documentElement.setAttribute('data-theme',t);}();
+</script>
 <link rel="canonical" href="<?= h($canon) ?>">
 <meta property="og:type" content="website">
 <meta property="og:title" content="<?= h(c('seo_title')) ?>">
@@ -81,6 +89,10 @@ $navItems = ['#home' => 'Home', '#services' => 'Services', '#about' => 'About', 
       <a class="btn btn--primary btn--sm nav-links__cta" href="#contact">Get Started</a>
     </nav>
     <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 14.2A8.6 8.6 0 1 1 9.8 3.4a7.2 7.2 0 0 0 10.8 10.8Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M4.3 4.3l1.7 1.7M18 18l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.3 19.7 6 18M18 6l1.7-1.7"/></svg>
+      </button>
       <a class="btn btn--primary btn--sm nav-cta" href="#contact">Get Started</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
