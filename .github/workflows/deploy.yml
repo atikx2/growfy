@@ -1,0 +1,44 @@
+# =====================================================================
+#  GitHub → cPanel Auto Deploy (FTP)
+#  GitHub-এ push করলেই স্বয়ংক্রিয়ভাবে hosting-এ ফাইল আপলোড হবে।
+#
+#  Enable করতে (GitHub repo → Settings → Secrets and variables → Actions):
+#    FTP_SERVER   = আপনার hosting FTP host (যেমন: growfy.info বা cpanel IP)
+#    FTP_USERNAME = FTP user (cPanel user ও হতে পারে)
+#    FTP_PASSWORD = FTP password
+#    FTP_PORT     = 21 (ডিফল্ট)
+#
+#  server-dir: আপনার cPanel home path — সাধারণত ফাঁকা রাখলে FTP login
+#  করলেই সঠিক জায়গায় যায়। public_html body তে যায় নিচের config-এ।
+# =====================================================================
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [arena/11e027a1-growfy, main]
+  workflow_dispatch: {}          # চাইলে GitHub-এ গিয়ে হাত দিয়েও চালানো যাবে
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ vars.FTP_PORT || 21 }}
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.github**
+            preview/**
+            data/**
+            uploads/img_*
+            config.local.php
+            .gitignore
+          log-level: minimal

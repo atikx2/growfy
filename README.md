@@ -35,6 +35,24 @@ Full admin panel, order management, contact inbox, newsletter — সবকি�
 
 ---
 
+## 🔁 Live Site-এ Change আনার ৩টি উপায়
+
+**৯০% পরিবর্তনের জন্য Git লাগবেই না!** Admin panel থেকেই সব instantly live হয়:
+text, headline, services, price, testimonials, FAQ, counters, contact info,
+social links, ছবি upload, SEO — কিছুই code/deploy লাগে না।
+
+কোনো **code/design পরিবর্তন** লাগলে:
+
+| উপায় | কীভাবে | কখন ব্যবহার করবেন |
+|---|---|---|
+| ① **cPanel File Manager** | সরাসরি ফাইল এডিট → সাথে সাথে live | ছোট দ্রুত change |
+| ② **cPanel Git pull** | Arena-তে change করলে বলুন → আমি GitHub-এ push → cPanel-এ "Update from Remote" ১ ক্লিক | বড়/structured update |
+| ③ **Full Auto Deploy** | GitHub-এ push হলেই auto FTP দিয়ে live (`.github/workflows/deploy.yml` ready আছে — শুধু repo Settings → Secrets-এ `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` বসান) | ঘন ঘন update চাইলে |
+
+> PR/merge **বাধ্যতামূলক না** — নিজের repo-তে সরাসরি push করলেই হবে। PR শুধু team review-র জন্য।
+
+---
+
 ## 🔗 GitHub থেকে cPanel-এ Auto Deploy (Git Version Control)
 
 cPanel → **Git™ Version Control** ফিচার থাকলে (hosting company enable করে দিতে পারে):
