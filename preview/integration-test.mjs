@@ -148,6 +148,30 @@ check('service save works', svcSave.httpStatusCode === 302);
 const home2 = await req('GET', '/');
 check('edited service appears on site', /EDITED-BY-E2E/.test(home2.text));
 
+// 10b. team members: seeds live, admin CRUD round-trip
+const teamPage = await req('GET', '/team.php');
+check('team page shows seeded members', teamPage.httpStatusCode === 200 && /Rafid Ahmed/.test(teamPage.text) && /Saiful Karim/.test(teamPage.text));
+check('team page serves member photos', /assets\/img\/team\/t1\.jpg/.test(teamPage.text));
+
+const adminTeamNew = await req('GET', '/admin/team.php?edit=new');
+const csrfTeam = csrfOf(adminTeamNew.text);
+const teamSave = await req('POST', '/admin/team.php', {
+  _act: 'save', _csrf: csrfTeam, id: '0', name: 'QA Tester Rahman', role: 'E2E Specialist',
+  bio: 'Added by integration test.', avatar: '', email: 'qa@growfy.test', phone: '',
+  facebook: '', twitter: '', linkedin: '', instagram: '', sort_order: '99', active: '1'
+});
+check('team member add works', teamSave.httpStatusCode === 302);
+const teamPage2 = await req('GET', '/team.php');
+check('new member visible on team page', /QA Tester Rahman/.test(teamPage2.text) && /E2E Specialist/.test(teamPage2.text));
+
+const adminTeamList = await req('GET', '/admin/team.php');
+const ids = [...adminTeamList.text.matchAll(/team\.php\?edit=(\d+)/g)].map(m => +m[1]);
+const newId = Math.max(...ids);
+const delRes = await req('POST', '/admin/team.php', { _act: 'delete', _csrf: csrfOf(adminTeamList.text), id: String(newId) });
+check('team member delete works', delRes.httpStatusCode === 302);
+const teamPage3 = await req('GET', '/team.php');
+check('deleted member gone from team page', !/QA Tester Rahman/.test(teamPage3.text));
+
 // 11. content editor round-trip
 const content = await req('GET', '/admin/content.php');
 const csrfContent = csrfOf(content.text);

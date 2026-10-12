@@ -3,11 +3,14 @@
 $siteName = c('site_name');
 $wa = preg_replace('/\D/', '', c('whatsapp_number'));
 $ver2 = fn(string $f) => file_exists(GROWFY_ROOT . '/' . $f) ? filemtime(GROWFY_ROOT . '/' . $f) : '1';
+$services     = $services     ?? q_all('services', 'active = 1');
+$testimonials = $testimonials ?? q_all('testimonials', 'active = 1');
+$fp = basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) === 'index.php' ? '' : 'index.php';
 ?>
 <footer class="footer" id="footer">
   <div class="container footer__grid">
     <div class="footer__brand">
-      <a class="brand" href="#home">
+      <a class="brand" href="<?= h($fp) ?>#home">
         <span class="brand__mark"><?php include __DIR__ . '/logo.php'; ?></span>
         <span class="brand__name"><?= h($siteName) ?></span>
       </a>
@@ -22,18 +25,19 @@ $ver2 = fn(string $f) => file_exists(GROWFY_ROOT . '/' . $f) ? filemtime(GROWFY_
 
     <nav class="footer__col" aria-label="Quick links">
       <h4>Quick Links</h4>
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#about">About Us</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <a href="<?= h($fp) ?>#home">Home</a>
+      <a href="<?= h($fp) ?>#services">Services</a>
+      <a href="<?= h($fp) ?>#about">About Us</a>
+      <a href="team.php">Our Team</a>
+      <a href="<?= h($fp) ?>#reviews">Reviews</a>
+      <a href="<?= h($fp) ?>#faq">FAQ</a>
+      <a href="<?= h($fp) ?>#contact">Contact</a>
     </nav>
 
     <nav class="footer__col" aria-label="Services">
       <h4>Services</h4>
       <?php foreach (array_slice($services, 0, 6) as $sv): ?>
-        <a href="#services"><?= h($sv['title']) ?></a>
+        <a href="<?= h($fp) ?>#services"><?= h($sv['title']) ?></a>
       <?php endforeach; ?>
     </nav>
 

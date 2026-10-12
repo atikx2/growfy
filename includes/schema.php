@@ -125,6 +125,22 @@ function schema_statements(string $driver): array
             email {$var(150)} NOT NULL UNIQUE,
             created_at {$time} DEFAULT $now
         )$eng",
+        "CREATE TABLE IF NOT EXISTS {$p}team_members (
+            id $ai,
+            name {$var(120)} NOT NULL,
+            role {$var(120)} DEFAULT '',
+            bio {$txt},
+            avatar {$var(255)} DEFAULT '',
+            email {$var(150)} DEFAULT '',
+            phone {$var(60)} DEFAULT '',
+            facebook {$var(255)} DEFAULT '',
+            twitter {$var(255)} DEFAULT '',
+            linkedin {$var(255)} DEFAULT '',
+            instagram {$var(255)} DEFAULT '',
+            sort_order $int DEFAULT 0,
+            active $tiny NOT NULL DEFAULT 1,
+            created_at {$time} DEFAULT $now
+        )$eng",
     ];
 }
 
@@ -246,6 +262,14 @@ function seed_rows(): array
             ['Do you provide customized packages?', 'Yes! Every business is unique. We analyze your goals and budget to create a custom roadmap that maximizes your return on investment.', 3],
             ['Which platforms do you specialize in?', 'We are experts in Instagram, YouTube, Facebook, TikTok, Spotify and Apple Music promotion — as well as Google Search and Display networks.', 4],
             ['How do I get started?', 'Simply click “Get Started” or “Contact Us”. We’ll schedule a free consultation to discuss your vision and how Growfy can bring it to life.', 5],
+        ],
+        'team_members' => [
+            ['Rafid Ahmed', 'Founder & CEO', 'The strategist behind Growfy’s growth engine. 10+ years scaling creators and brands — he still personally reviews every major campaign before launch.', 'assets/img/team/t1.jpg', 'rafid@growfy.info', '', 'https://facebook.com/growfy', 'https://x.com/growfy', 'https://linkedin.com/company/growfy', '', 1],
+            ['Nusrat Jahan', 'Head of Growth Strategy', 'Turns audience data into growth roadmaps. Nusrat designs the targeting, hooks and funnels that keep client accounts compounding month after month.', 'assets/img/team/t2.jpg', 'nusrat@growfy.info', '', '', 'https://x.com/growfy', 'https://linkedin.com/company/growfy', 'https://instagram.com/growfy', 2],
+            ['David Chen', 'Creative Director', 'Obsessed with thumb-stopping content. David leads the design team crafting the visuals, reels and brand systems that make profiles impossible to ignore.', 'assets/img/team/t3.jpg', 'david@growfy.info', '', '', '', 'https://linkedin.com/company/growfy', 'https://instagram.com/growfy', 3],
+            ['Tanvir Hasan', 'Performance Ads Manager', 'Our paid acquisition ace. Tanvir manages six-figure monthly ad budgets across Meta, TikTok and Google with ROI dashboards clients actually love.', 'assets/img/team/t4.jpg', 'tanvir@growfy.info', '', 'https://facebook.com/growfy', '', 'https://linkedin.com/company/growfy', '', 4],
+            ['Emily Stone', 'Social Media Lead', 'The voice behind the community. Emily runs day-to-day content calendars, trend jacking and engagement for 40+ active client accounts.', 'assets/img/team/t5.jpg', 'emily@growfy.info', '', '', '', '', 'https://instagram.com/growfy', 5],
+            ['Saiful Karim', 'Support & Community Lead', 'Fastest reply in the game. Saiful makes sure every client question, report and revision lands within hours — not days.', 'assets/img/team/t6.jpg', 'support@growfy.info', '', 'https://facebook.com/growfy', '', '', '', 6],
         ],
     ];
 }

@@ -66,6 +66,24 @@ function db_install(PDO $pdo, string $driver): void
         $pdo->exec($sql);
     }
 
+    // Upgrade path — seed team_members once (covers installs created before the
+    // table existed). A settings flag ensures deleted members are never re-added.
+    try {
+        $teamSeeded = (string) $pdo->query("SELECT v FROM {$p}settings WHERE k = 'team_seeded'")->fetchColumn();
+    } catch (Throwable $e) {
+        $teamSeeded = '';
+    }
+    if ($teamSeeded !== '1') {
+        $tc = (int) $pdo->query("SELECT COUNT(*) FROM {$p}team_members")->fetchColumn();
+        if ($tc === 0) {
+            $stT = $pdo->prepare("INSERT INTO {$p}team_members (name, role, bio, avatar, email, phone, facebook, twitter, linkedin, instagram, sort_order, active) VALUES (?,?,?,?,?,?,?,?,?,?,?,1)");
+            foreach (seed_rows()['team_members'] as $r) {
+                $stT->execute($r);
+            }
+        }
+        $pdo->prepare("INSERT INTO {$p}settings (k, v) VALUES ('team_seeded', '1')")->execute();
+    }
+
     if ($exists) {
         return; // already installed
     }

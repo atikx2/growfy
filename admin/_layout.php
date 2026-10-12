@@ -19,6 +19,7 @@ function admin_header(string $title, string $active, array $user): void
         ['features.php',     'Why Us Cards', 'shield', null],
         ['stats.php',        'Counters',     'target', null],
         ['testimonials.php', 'Testimonials', 'message',null],
+        ['team.php',         'Team Members', 'users',  null],
         ['faqs.php',         'FAQs',         'search', null],
         ['orders.php',       'Orders',       'bolt',   $newOrders],
         ['inbox.php',        'Inbox',        'mail',   $unread],

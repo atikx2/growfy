@@ -5,15 +5,23 @@ $scheme   = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SE
 $baseUrl  = $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
 $canon    = $baseUrl . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
 $ver      = fn(string $f) => file_exists(GROWFY_ROOT . '/' . $f) ? filemtime(GROWFY_ROOT . '/' . $f) : '1';
-$navItems = ['#home' => 'Home', '#services' => 'Services', '#about' => 'About', '#process' => 'Process', '#why' => 'Why Us', '#reviews' => 'Reviews', '#faq' => 'FAQ'];
+$onHome   = basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) === 'index.php';
+$p        = $onHome ? '' : 'index.php';
+$navItems = [
+    $p . '#home' => 'Home', $p . '#services' => 'Services', $p . '#about' => 'About',
+    $p . '#process' => 'Process', 'team.php' => 'Team', $p . '#why' => 'Why Us',
+    $p . '#reviews' => 'Reviews', $p . '#faq' => 'FAQ',
+];
+$pageTitle = $PAGE_TITLE ?? c('seo_title');
+$pageDesc  = $PAGE_DESC  ?? c('seo_description');
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= h(c('seo_title')) ?></title>
-<meta name="description" content="<?= h(c('seo_description')) ?>">
+<title><?= h($pageTitle) ?></title>
+<meta name="description" content="<?= h($pageDesc) ?>">
 <meta name="keywords" content="<?= h(c('seo_keywords')) ?>">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#070b12">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f6fa">
@@ -26,8 +34,8 @@ document.documentElement.setAttribute('data-theme',t);}();
 </script>
 <link rel="canonical" href="<?= h($canon) ?>">
 <meta property="og:type" content="website">
-<meta property="og:title" content="<?= h(c('seo_title')) ?>">
-<meta property="og:description" content="<?= h(c('seo_description')) ?>">
+<meta property="og:title" content="<?= h($pageTitle) ?>">
+<meta property="og:description" content="<?= h($pageDesc) ?>">
 <meta property="og:url" content="<?= h($canon) ?>">
 <meta property="og:site_name" content="<?= h($siteName) ?>">
 <meta property="og:image" content="<?= h($baseUrl) ?>/assets/img/og.jpg">
@@ -78,22 +86,22 @@ document.documentElement.setAttribute('data-theme',t);}();
 
 <header class="navbar" id="navbar">
   <div class="container nav">
-    <a class="brand" href="#home" aria-label="<?= h($siteName) ?> home">
+    <a class="brand" href="<?= h($p) ?>#home" aria-label="<?= h($siteName) ?> home">
       <span class="brand__mark"><?php include __DIR__ . '/logo.php'; ?></span>
       <span class="brand__name"><?= h($siteName) ?></span>
     </a>
     <nav class="nav-links" id="navLinks" aria-label="Primary">
       <?php foreach ($navItems as $href => $label): ?>
-        <a href="<?= h($href) ?>" class="nav-link"><?= h($label) ?></a>
+        <a href="<?= h($href) ?>" class="nav-link<?= (!$onHome && $href === 'team.php') ? ' is-active' : '' ?>"><?= h($label) ?></a>
       <?php endforeach; ?>
-      <a class="btn btn--primary btn--sm nav-links__cta" href="#contact">Get Started</a>
+      <a class="btn btn--primary btn--sm nav-links__cta" href="<?= h($p) ?>#contact">Get Started</a>
     </nav>
     <div class="nav-right">
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 14.2A8.6 8.6 0 1 1 9.8 3.4a7.2 7.2 0 0 0 10.8 10.8Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M4.3 4.3l1.7 1.7M18 18l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.3 19.7 6 18M18 6l1.7-1.7"/></svg>
       </button>
-      <a class="btn btn--primary btn--sm nav-cta" href="#contact">Get Started</a>
+      <a class="btn btn--primary btn--sm nav-cta" href="<?= h($p) ?>#contact">Get Started</a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>

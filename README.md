@@ -11,6 +11,7 @@ Full admin panel, order management, contact inbox, newsletter — সবকি�
 
 **ওয়েবসাইট (Frontend)**
 - 🌗 **Dark/Light mode toggle** (navbar-এ) — visitor-এর পছন্দ মনে রাখে + system theme respect করে
+- 👥 **Dedicated Team page** (`team.php`) — professional member cards: photo, role badge, bio, hover-এ social icons, email/call pills, join-us CTA
 - Premium dark UI — glassmorphism navbar, gradient hero, floating stat cards
 - Animated counters, testimonial slider (drag/swipe), FAQ accordion, platform marquee
 - **Order Now modal** — ভিজিটর সরাসরি service order/inquiry করতে পারবে
@@ -22,6 +23,7 @@ Full admin panel, order management, contact inbox, newsletter — সবকি�
 - Dashboard — live counters, 14-day activity chart, latest messages/orders
 - **Site Content** — homepage-এর প্রতিটা text এডিট করা যায় (hero, about, CTA…)
 - Services / Process Steps / Why-Us cards / Counters / Testimonials / FAQs — full CRUD
+- 👥 **Team Members** — add/edit/delete: photo upload, role, bio, email/phone, Facebook/X/LinkedIn/Instagram, sort order, Live/Hidden toggle
 - **Orders inbox** — status manage (New → Contacted → Completed/Cancelled)
 - **Messages inbox** — read/reply/delete
 - Subscribers list + CSV export

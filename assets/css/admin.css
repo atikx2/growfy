@@ -360,3 +360,6 @@ input[type="file"]::file-selector-button:hover { border-color: rgba(74,222,128,.
   .table-wrap { margin: 0 -18px; padding: 0 18px; }
   .admin-top { padding: 14px 16px; }
 }
+
+/* panel head button group */
+.panel__actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
